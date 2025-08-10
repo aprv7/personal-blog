@@ -1,18 +1,8 @@
-import React, { useState } from 'react';
+import React from 'react';
 
 const BlogHome: React.FC = () => {
-  const [email, setEmail] = useState('');
   const year = new Date().getFullYear();
 
-  const handleSubscribe = (e: React.FormEvent) => {
-    e.preventDefault();
-    if (!email.trim()) {
-      alert('Please enter an email');
-      return;
-    }
-    alert(`Thanks — you're subscribed (demo).`);
-    setEmail('');
-  };
 
   return (
     <div className="container" style={{  margin: '0 auto', padding: '48px 20px', fontFamily: 'Inter, system-ui' }}>
