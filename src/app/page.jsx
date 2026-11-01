@@ -5,24 +5,11 @@ const PROFILE_IMG = "/photo.JPG";
 
 const ABOUT_TEXT = `Hi, I'm Apoorva!\nI'm a developer passionate about tech, hardware, and photography.\nWelcome to my corner of the internet.`;
 
-function pixelateFilter() {
-  // CSS filter for pixelated grayscale effect
-  return {
-    width: 160,
-    height: 160,
-    border: "2px solid #00FF41",
-    background: "#000",
-    display: "block",
-    margin: "0 auto",
-    borderRadius: 8,
-    boxShadow: "0 0 16px #00FF4188",
-  };
-}
-
 function AsciiArtBox({ children }) {
   // ASCII art style border
   return (
     <pre
+      className="ascii-art-box"
       style={{
         color: "#00FF41",
         background: "#000",
@@ -88,17 +75,12 @@ function useVisitorCount() {
 export default function Home() {
   const visitorCount = useVisitorCount();
   return (
-    <div style={{ minHeight: "100vh", display: "flex", flexDirection: "column", justifyContent: "space-between" }}>
-      <div style={{ marginTop: 32, textAlign: "center" }}>
+    <div className="home-page">
+    <div className="home-intro">
         <AsciiArtBox>
-          <img src={PROFILE_IMG} alt="Profile" style={pixelateFilter()} />
+        <img className="profile-image" src={PROFILE_IMG} alt="Profile" />
         </AsciiArtBox>
         <TypingText text={ABOUT_TEXT} />
-      </div>
-      <div style={{ textAlign: "center", marginBottom: 24, color: "#00FF41", fontFamily: "inherit", fontSize: 18 }}>
-        {"> VISITOR_COUNT: ["}
-        {visitorCount === null ? "..." : visitorCount}
-        {"]"}
       </div>
     </div>
   );

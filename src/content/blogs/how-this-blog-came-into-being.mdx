@@ -1,0 +1,19 @@
+export const metadata = {
+  title: "How this blog came into being",
+  date: "2026-11-01",
+  description:
+    "My attempt to stop doom-scrolling and get into homelabs",
+  coverImage: "/qlc.jpeg",
+  coverImageAlt: "Quarter life crisis",
+};
+
+![Homelab babyyy](/hobelam.jpeg)
+
+The idea started when I went into the rabbit hole of homelabs, the idea of hosting something and not having to pay the compute overlords sounded very rebellious.
+
+So I took a dirty look at my old laptop and started working on it one step at a time, first off was getting a domain name, bought aprv7 because I thought that it would make the site sound cooler (*sighs*). Next step was to ask my ISP to provide me with a static IP address.
+
+To repurpose my old laptop I had to strip off the bloated Windows and install Ubuntu, tried to install Arch but that just wasn't my cup of tea. To make my website follow HTTPS, I used certbot to generate a certificate for me (Mr. Perfectionist heheh). The next step was wiring everything together. Currently the laptop is hooked up with my main router, the router port forwards all the request to port 443 and 80 to the laptop's port 443 and 80 respectively.
+
+Laptop is running nginx listening to port 80 and 443 and everything goes through it. Coming to the website, it is written in react (huge shoutout to my best friends co-pilot and claude) I wanted to give the theme of a retro computer terminal. The blog posts are baked into the code until I find a better way which means I need to do a new commit everytime I put up a new blogpost, ideally I can build a CI/CD pipeline but for a small blog like this it feels like an overkill (for now!).
+

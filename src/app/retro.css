@@ -22,10 +22,14 @@ body {
   background: var(--background);
   color: var(--foreground);
   font-family: var(--font-terminal);
-  min-height: 100vh;
+  min-height: 100svh;
   position: relative;
   overflow-x: hidden;
   animation: crt-flicker 1.5s infinite steps(2, end);
+}
+
+img {
+  max-width: 100%;
 }
 
 body::before {
@@ -63,7 +67,7 @@ a {
 }
 
 nav {
-  width: 100vw;
+  width: 100%;
   background: #000000;
   border-bottom: 2px solid #00FF41;
   padding: 0.5rem 0;
@@ -90,6 +94,210 @@ nav {
   background: var(--foreground);
   color: var(--background);
   border: 1px solid var(--foreground);
+}
+
+.home-page {
+  min-height: calc(100svh - 3.5rem);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  padding: 2rem 1rem 1.5rem;
+  text-align: center;
+}
+
+.home-intro {
+  width: 100%;
+}
+
+.ascii-art-box {
+  max-width: 100%;
+  color: var(--foreground);
+  background: var(--background);
+  padding: 8px;
+  border: 2px dashed var(--foreground);
+  border-radius: 8px;
+  text-align: center;
+  display: inline-block;
+  margin: 0 auto 1.5rem;
+  overflow: auto;
+}
+
+.profile-image {
+  display: block;
+  width: min(160px, 52vw);
+  height: auto;
+  aspect-ratio: 1;
+  object-fit: cover;
+  border: 2px solid var(--foreground);
+  background: var(--background);
+  margin: 0 auto;
+  border-radius: 8px;
+  box-shadow: 0 0 16px #00FF4188;
+}
+
+.typing-text {
+  min-height: 7.5rem;
+  color: var(--foreground);
+  background: none;
+  font-size: clamp(1.125rem, 5vw, 1.25rem);
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+}
+
+.visitor-count {
+  margin-top: 2rem;
+  font-size: clamp(1rem, 4.5vw, 1.125rem);
+}
+
+.blogs-page,
+.blog-post-page {
+  width: min(calc(100% - 2rem), 760px);
+  margin: 2rem auto;
+}
+
+.blogs-intro {
+  margin: 0.75rem 0 2rem;
+}
+
+.blog-list {
+  display: grid;
+  gap: 1.5rem;
+}
+
+.blog-card {
+  border: 1px dashed var(--foreground);
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.blog-card-link {
+  display: grid;
+  grid-template-columns: minmax(140px, 220px) 1fr;
+  gap: 1.25rem;
+  padding: 1rem;
+}
+
+.blog-card img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border: 1px solid var(--foreground);
+}
+
+.blog-card h2 {
+  margin: 0.4rem 0;
+}
+
+.blog-card p {
+  margin-bottom: 0.75rem;
+}
+
+.blog-card span {
+  text-decoration: underline;
+}
+
+.blog-post-page > a {
+  display: inline-block;
+  margin-bottom: 1.5rem;
+}
+
+.blog-post-header {
+  margin-bottom: 1.5rem;
+}
+
+.blog-post-header time {
+  display: block;
+  margin-top: 0.5rem;
+}
+
+.blog-article {
+  line-height: 1.6;
+}
+
+.blog-article h2,
+.blog-article h3,
+.blog-article p,
+.blog-article ul,
+.blog-article ol,
+.blog-article blockquote,
+.blog-article pre {
+  margin: 1rem 0;
+}
+
+.blog-article img {
+  display: block;
+  max-width: 100%;
+  height: auto;
+  border: 1px solid var(--foreground);
+}
+
+.blog-article figcaption {
+  margin-top: 0.5rem;
+  font-size: 0.9em;
+}
+
+@media (max-width: 560px) {
+  nav {
+    gap: 0.125rem;
+    padding: 0.35rem 0.5rem;
+  }
+
+  .nav-link {
+    flex: 1 1 0;
+    min-width: 0;
+    min-height: 44px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0;
+    padding: 0.5rem 0.1rem;
+    font-size: clamp(0.875rem, 4vw, 1.1rem);
+    white-space: nowrap;
+  }
+
+  .home-page {
+    min-height: calc(100svh - 3.5rem);
+    padding: 1.5rem 1rem 1rem;
+  }
+
+  .blogs-page,
+  .blog-post-page {
+    width: min(calc(100% - 1.5rem), 760px);
+    margin: 1.25rem auto;
+  }
+
+  .blog-post-header h1,
+  .blogs-page > h1 {
+    font-size: clamp(1.5rem, 7vw, 2rem);
+  }
+
+  .blog-article {
+    font-size: 1.05rem;
+    line-height: 1.65;
+    overflow-wrap: anywhere;
+  }
+
+  .blog-article pre {
+    max-width: 100%;
+    overflow-x: auto;
+  }
+
+  .blog-card-link {
+    grid-template-columns: 1fr;
+    gap: 0.75rem;
+    padding: 0.75rem;
+  }
+
+  .blog-card img {
+    height: clamp(150px, 55vw, 220px);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  body {
+    animation: none;
+  }
 }
 
 /* Hide scrollbars for a cleaner look */
