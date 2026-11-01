@@ -1,5 +1,4 @@
-"use client";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 
 // Profile image (replace with your own image in /public/profile.jpg)
 const PROFILE_IMG = "/photo.JPG";
@@ -55,7 +54,6 @@ function TypingText({ text, speed = 50 }) {
     }
     tick(0);
     return () => { cancelled = true; };
-    // eslint-disable-next-line
   }, [text, speed]);
   return (
     <pre style={{ color: "#00FF41", background: "none", fontSize: 20, minHeight: 120 }}>{text.slice(0, index)}|</pre>
