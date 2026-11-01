@@ -291,6 +291,8 @@ nav {
 
   .blog-card img {
     height: clamp(150px, 55vw, 220px);
+    object-fit: contain;
+    background: var(--background);
   }
 }
 

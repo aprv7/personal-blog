@@ -42,38 +42,10 @@ function TypingText({ text, speed = 50 }) {
     tick(0);
     return () => { cancelled = true; };
   }, [text, speed]);
-  return (
-    <pre style={{ color: "#00FF41", background: "none", fontSize: 20, minHeight: 120 }}>{text.slice(0, index)}|</pre>
-  );
-}
-
-function useVisitorCount() {
-  const [count, setCount] = useState(null);
-  useEffect(() => {
-    // Try countapi.xyz first
-    fetch("https://api.countapi.xyz/hit/apoorva-blog/visits")
-      .then((res) => res.json())
-      .then((data) => {
-        if (data && typeof data.value === "number") setCount(data.value);
-        else throw new Error("No value");
-      })
-      .catch(() => {
-        // Fallback: localStorage
-        try {
-          let local = parseInt(localStorage.getItem("visitor_count") || "0", 10);
-          local++;
-          setCount(local);
-          localStorage.setItem("visitor_count", local);
-        } catch {
-          setCount("?");
-        }
-      });
-  }, []);
-  return count;
+  return <pre className="typing-text">{text.slice(0, index)}|</pre>;
 }
 
 export default function Home() {
-  const visitorCount = useVisitorCount();
   return (
     <div className="home-page">
     <div className="home-intro">
