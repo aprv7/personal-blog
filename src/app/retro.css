@@ -1,0 +1,96 @@
+/*
+  CRT Flicker & Scanline Animation
+  - Uses a lightweight keyframe animation for flicker
+  - Adds a scanline overlay using a pseudo-element
+*/
+@import url('https://fonts.googleapis.com/css2?family=VT323&display=swap');
+
+:root {
+  --background: #000000;
+  --foreground: #00FF41;
+  --font-terminal: 'VT323', 'Fira Code', 'Courier Prime', monospace;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  outline: none;
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-terminal);
+  min-height: 100vh;
+  position: relative;
+  overflow-x: hidden;
+  animation: crt-flicker 1.5s infinite steps(2, end);
+}
+
+body::before {
+  content: "";
+  pointer-events: none;
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  background: repeating-linear-gradient(
+    to bottom,
+    rgba(0,0,0,0) 0px,
+    rgba(0,0,0,0) 1px,
+    rgba(0,0,0,0.08) 2px,
+    rgba(0,0,0,0.08) 4px
+  );
+  mix-blend-mode: multiply;
+  opacity: 0.5;
+  pointer-events: none;
+}
+
+@keyframes crt-flicker {
+  0%, 100% { opacity: 1; }
+  48% { opacity: 0.98; }
+  50% { opacity: 0.92; }
+  52% { opacity: 0.98; }
+  53% { opacity: 0.96; }
+  54% { opacity: 1; }
+}
+
+a {
+  color: var(--foreground);
+  text-decoration: none;
+  transition: background 0.2s, color 0.2s;
+  font-family: inherit;
+}
+
+nav {
+  width: 100vw;
+  background: #000000;
+  border-bottom: 2px solid #00FF41;
+  padding: 0.5rem 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+}
+
+.nav-link {
+  display: inline-block;
+  padding: 0.5rem 1.5rem;
+  margin: 0 0.5rem;
+  border-radius: 4px;
+  font-size: 1.25rem;
+  background: transparent;
+  color: var(--foreground);
+  border: 1px solid transparent;
+}
+
+.nav-link.active {
+  background: var(--foreground);
+  color: var(--background);
+  border: 1px solid var(--foreground);
+}
+
+/* Hide scrollbars for a cleaner look */
+::-webkit-scrollbar { display: none; }

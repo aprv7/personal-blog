@@ -1,65 +1,107 @@
-import Image from "next/image";
+"use client";
+import { useEffect, useRef, useState } from "react";
+
+// Profile image (replace with your own image in /public/profile.jpg)
+const PROFILE_IMG = "/photo.JPG";
+
+const ABOUT_TEXT = `Hi, I'm Apoorva!\nI'm a developer passionate about tech, hardware, and photography.\nWelcome to my corner of the internet.`;
+
+function pixelateFilter() {
+  // CSS filter for pixelated grayscale effect
+  return {
+    width: 160,
+    height: 160,
+    border: "2px solid #00FF41",
+    background: "#000",
+    display: "block",
+    margin: "0 auto",
+    borderRadius: 8,
+    boxShadow: "0 0 16px #00FF4188",
+  };
+}
+
+function AsciiArtBox({ children }) {
+  // ASCII art style border
+  return (
+    <pre
+      style={{
+        color: "#00FF41",
+        background: "#000",
+        padding: 8,
+        border: "2px dashed #00FF41",
+        borderRadius: 8,
+        textAlign: "center",
+        display: "inline-block",
+        margin: "0 auto 1.5rem auto",
+      }}
+    >
+      {children}
+    </pre>
+  );
+}
+
+function TypingText({ text, speed = 50 }) {
+  const [index, setIndex] = useState(0);
+  useEffect(() => {
+    setIndex(0);
+    if (!text) return;
+    let cancelled = false;
+    function tick(i) {
+      if (cancelled) return;
+      setIndex(i);
+      if (i < text.length) {
+        setTimeout(() => tick(i + 1), text.charAt(i) === "\n" ? speed * 10 : speed);
+      }
+    }
+    tick(0);
+    return () => { cancelled = true; };
+    // eslint-disable-next-line
+  }, [text, speed]);
+  return (
+    <pre style={{ color: "#00FF41", background: "none", fontSize: 20, minHeight: 120 }}>{text.slice(0, index)}|</pre>
+  );
+}
+
+function useVisitorCount() {
+  const [count, setCount] = useState(null);
+  useEffect(() => {
+    // Try countapi.xyz first
+    fetch("https://api.countapi.xyz/hit/apoorva-blog/visits")
+      .then((res) => res.json())
+      .then((data) => {
+        if (data && typeof data.value === "number") setCount(data.value);
+        else throw new Error("No value");
+      })
+      .catch(() => {
+        // Fallback: localStorage
+        try {
+          let local = parseInt(localStorage.getItem("visitor_count") || "0", 10);
+          local++;
+          setCount(local);
+          localStorage.setItem("visitor_count", local);
+        } catch {
+          setCount("?");
+        }
+      });
+  }, []);
+  return count;
+}
 
 export default function Home() {
+  const visitorCount = useVisitorCount();
   return (
-    <div className="flex flex-col flex-1 items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex flex-1 w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the page.js file.
-          </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
-          </p>
-        </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={16}
-            />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
-        </div>
-      </main>
+    <div style={{ minHeight: "100vh", display: "flex", flexDirection: "column", justifyContent: "space-between" }}>
+      <div style={{ marginTop: 32, textAlign: "center" }}>
+        <AsciiArtBox>
+          <img src={PROFILE_IMG} alt="Profile" style={pixelateFilter()} />
+        </AsciiArtBox>
+        <TypingText text={ABOUT_TEXT} />
+      </div>
+      <div style={{ textAlign: "center", marginBottom: 24, color: "#00FF41", fontFamily: "inherit", fontSize: 18 }}>
+        {"> VISITOR_COUNT: ["}
+        {visitorCount === null ? "..." : visitorCount}
+        {"]"}
+      </div>
     </div>
   );
 }
