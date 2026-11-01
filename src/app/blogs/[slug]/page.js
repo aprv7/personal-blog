@@ -6,24 +6,7 @@ const DUMMY_POST = {
   title: "Retro Terminal Blog Post",
   date: "2026-05-01",
   tags: ["retro", "terminal", "aesthetic"],
-  content: `
-# Welcome to the Retro Terminal Blog
-
-This is a sample blog post written in **Markdown**.
-
-- All lists
-- Are styled
-
-> Blockquotes look like this.
-
-## Code Example
-
-```
-console.log('Hello, world!');
-```
-
-You can use *italics* and **bold** text.
-`,
+  content: ""
 };
 
 function AsciiMetaBox({ title, date, tags }) {
